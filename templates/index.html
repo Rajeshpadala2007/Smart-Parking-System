@@ -7,6 +7,12 @@
 
     <title>Smart Parking Management</title>
 
+    <!-- Browser tab parking icon -->
+    <link rel="icon"
+          type="image/svg+xml"
+          href="{{ url_for('static', filename='favicon.svg') }}">
+
+    <!-- Main CSS -->
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -16,7 +22,6 @@
 <div class="layout">
 
     <aside class="sidebar">
-
         <div class="brand">
             <div class="brand-icon">P</div>
             <div>
@@ -75,7 +80,6 @@
 
     </aside>
 
-
     <main class="main-content">
 
         <header class="topbar">
@@ -89,7 +93,6 @@
                 <span class="date-label" id="currentDate"></span>
             </div>
         </header>
-
 
         <!-- DASHBOARD PAGE -->
 
@@ -143,9 +146,7 @@
 
             </div>
 
-
             <div class="content-card">
-
                 <div class="card-heading">
                     <div>
                         <h2>Vehicle Entry</h2>
@@ -154,7 +155,6 @@
                 </div>
 
                 <form id="entryForm" class="entry-form">
-
                     <input
                         type="text"
                         id="vehicleNumber"
@@ -165,16 +165,12 @@
                     <button type="submit" class="primary-button">
                         + Park Vehicle
                     </button>
-
                 </form>
 
                 <p id="entryMessage" class="message"></p>
-
             </div>
 
-
             <div class="content-card">
-
                 <div class="card-heading">
                     <div>
                         <h2>Parking Slot Status</h2>
@@ -183,16 +179,13 @@
                 </div>
 
                 <div id="parkingGrid" class="parking-grid"></div>
-
             </div>
 
         </section>
 
-
         <!-- THREADS PAGE -->
 
         <section class="page" id="threads">
-
             <div class="content-card">
                 <div class="card-heading">
                     <div>
@@ -203,14 +196,11 @@
 
                 <ul id="threadLogs" class="log-list"></ul>
             </div>
-
         </section>
-
 
         <!-- MUTEX PAGE -->
 
         <section class="page" id="mutex">
-
             <div class="content-card">
                 <h2>Mutex Lock Management</h2>
                 <p>Mutex prevents multiple threads from modifying shared parking data simultaneously.</p>
@@ -221,14 +211,11 @@
 
                 <ul id="mutexLogs" class="log-list"></ul>
             </div>
-
         </section>
-
 
         <!-- SEMAPHORE PAGE -->
 
         <section class="page" id="semaphore">
-
             <div class="content-card">
                 <h2>Semaphore Management</h2>
                 <p>Semaphore controls the number of vehicles allowed to occupy parking slots.</p>
@@ -241,28 +228,22 @@
 
                 <ul id="semaphoreLogs" class="log-list"></ul>
             </div>
-
         </section>
-
 
         <!-- WAITING QUEUE PAGE -->
 
         <section class="page" id="waiting">
-
             <div class="content-card">
                 <h2>FIFO Waiting Queue</h2>
                 <p>Vehicles are served in their order of arrival.</p>
 
                 <ol id="waitingList" class="queue-list"></ol>
             </div>
-
         </section>
-
 
         <!-- DATABASE PAGE -->
 
         <section class="page" id="database">
-
             <div class="content-card">
                 <h2>Parking Database</h2>
                 <p>Vehicle entry and exit records stored in SQLite.</p>
@@ -285,28 +266,22 @@
                     </table>
                 </div>
             </div>
-
         </section>
-
 
         <!-- ACTIVITY PAGE -->
 
         <section class="page" id="activity">
-
             <div class="content-card">
                 <h2>Activity Log</h2>
                 <p>History of parking system activities.</p>
 
                 <ul id="activityLogs" class="log-list"></ul>
             </div>
-
         </section>
-
 
         <!-- SETTINGS PAGE -->
 
         <section class="page" id="settings">
-
             <div class="content-card">
                 <h2>Parking Settings</h2>
                 <p>Change the total parking capacity.</p>
@@ -317,7 +292,6 @@
                 </div>
 
                 <form id="resizeForm" class="settings-form">
-
                     <label for="newSlotCount">
                         New Total Parking Slots
                     </label>
@@ -333,7 +307,6 @@
                     <button type="submit" class="primary-button">
                         Save Parking Settings
                     </button>
-
                 </form>
 
                 <p id="resizeMessage" class="message"></p>
@@ -343,11 +316,8 @@
                     You cannot reduce parking capacity below the number of currently occupied slots.
                     When capacity increases, waiting vehicles are automatically assigned to available slots in FIFO order.
                 </div>
-
             </div>
-
         </section>
-
 
         <footer>
             ParkSmart | Smart Parking Slot Allocation System
@@ -357,6 +327,7 @@
 
 </div>
 
+<!-- Main JavaScript -->
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
