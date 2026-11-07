@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Parking Management</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">P</div>
+            <div>
+                <h2>ParkSmart</h2>
+                <span>Management System</span>
+            </div>
+        </div>
+
+        <div class="nav-heading">MAIN MENU</div>
+
+        <nav class="navigation">
+
+            <button class="nav-link active" data-page="dashboard">
+                <span>▦</span> Dashboard
+            </button>
+
+            <button class="nav-link" data-page="threads">
+                <span>⌘</span> Threads
+            </button>
+
+            <button class="nav-link" data-page="mutex">
+                <span>🔒</span> Mutex
+            </button>
+
+            <button class="nav-link" data-page="semaphore">
+                <span>◉</span> Semaphore
+            </button>
+
+            <button class="nav-link" data-page="waiting">
+                <span>☷</span> Waiting Queue
+            </button>
+
+            <button class="nav-link" data-page="database">
+                <span>▤</span> Database
+            </button>
+
+            <button class="nav-link" data-page="activity">
+                <span>◷</span> Activity Log
+            </button>
+
+            <div class="nav-heading settings-heading">SYSTEM</div>
+
+            <button class="nav-link" data-page="settings">
+                <span>⚙</span> Settings
+            </button>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-avatar">A</div>
+            <div>
+                <strong>Administrator</strong>
+                <small>Local demonstration</small>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1 id="pageTitle">Dashboard</h1>
+                <p id="pageSubtitle">Monitor your parking operations</p>
+            </div>
+
+            <div class="topbar-right">
+                <span class="live-indicator">● System Live</span>
+                <span class="date-label" id="currentDate"></span>
+            </div>
+        </header>
+
+
+        <!-- DASHBOARD PAGE -->
+
+        <section class="page active" id="dashboard">
+
+            <div class="welcome-banner">
+                <div>
+                    <h2>Welcome to ParkSmart</h2>
+                    <p>Manage parking slots and vehicle movements in one place.</p>
+                </div>
+                <div class="welcome-icon">🚗</div>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Total Slots</span>
+                        <span class="stat-icon blue">▦</span>
+                    </div>
+                    <strong id="totalSlots">0</strong>
+                    <small>Parking capacity</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Available Slots</span>
+                        <span class="stat-icon green">✓</span>
+                    </div>
+                    <strong id="availableSlots">0</strong>
+                    <small>Ready for vehicles</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Occupied Slots</span>
+                        <span class="stat-icon red">🚘</span>
+                    </div>
+                    <strong id="occupiedSlots">0</strong>
+                    <small>Currently parked</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Waiting Vehicles</span>
+                        <span class="stat-icon orange">◷</span>
+                    </div>
+                    <strong id="waitingCount">0</strong>
+                    <small>In FIFO queue</small>
+                </div>
+
+            </div>
+
+
+            <div class="content-card">
+
+                <div class="card-heading">
+                    <div>
+                        <h2>Vehicle Entry</h2>
+                        <p>Register a new arriving vehicle.</p>
+                    </div>
+                </div>
+
+                <form id="entryForm" class="entry-form">
+
+                    <input
+                        type="text"
+                        id="vehicleNumber"
+                        placeholder="Enter vehicle number (e.g. TN01AB1234)"
+                        required
+                    >
+
+                    <button type="submit" class="primary-button">
+                        + Park Vehicle
+                    </button>
+
+                </form>
+
+                <p id="entryMessage" class="message"></p>
+
+            </div>
+
+
+            <div class="content-card">
+
+                <div class="card-heading">
+                    <div>
+                        <h2>Parking Slot Status</h2>
+                        <p>Click Exit Vehicle to release an occupied slot.</p>
+                    </div>
+                </div>
+
+                <div id="parkingGrid" class="parking-grid"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- THREADS PAGE -->
+
+        <section class="page" id="threads">
+
+            <div class="content-card">
+                <div class="card-heading">
+                    <div>
+                        <h2>Thread Management</h2>
+                        <p>Each vehicle arrival is processed by a Python thread.</p>
+                    </div>
+                </div>
+
+                <ul id="threadLogs" class="log-list"></ul>
+            </div>
+
+        </section>
+
+
+        <!-- MUTEX PAGE -->
+
+        <section class="page" id="mutex">
+
+            <div class="content-card">
+                <h2>Mutex Lock Management</h2>
+                <p>Mutex prevents multiple threads from modifying shared parking data simultaneously.</p>
+
+                <div class="info-box">
+                    <strong>Mechanism:</strong> Python threading.Lock()
+                </div>
+
+                <ul id="mutexLogs" class="log-list"></ul>
+            </div>
+
+        </section>
+
+
+        <!-- SEMAPHORE PAGE -->
+
+        <section class="page" id="semaphore">
+
+            <div class="content-card">
+                <h2>Semaphore Management</h2>
+                <p>Semaphore controls the number of vehicles allowed to occupy parking slots.</p>
+
+                <div id="semaphoreSummary" class="info-box"></div>
+
+                <div class="progress-track">
+                    <div id="capacityBar" class="progress-bar"></div>
+                </div>
+
+                <ul id="semaphoreLogs" class="log-list"></ul>
+            </div>
+
+        </section>
+
+
+        <!-- WAITING QUEUE PAGE -->
+
+        <section class="page" id="waiting">
+
+            <div class="content-card">
+                <h2>FIFO Waiting Queue</h2>
+                <p>Vehicles are served in their order of arrival.</p>
+
+                <ol id="waitingList" class="queue-list"></ol>
+            </div>
+
+        </section>
+
+
+        <!-- DATABASE PAGE -->
+
+        <section class="page" id="database">
+
+            <div class="content-card">
+                <h2>Parking Database</h2>
+                <p>Vehicle entry and exit records stored in SQLite.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Vehicle</th>
+                                <th>Slot</th>
+                                <th>Arrival</th>
+                                <th>Entry</th>
+                                <th>Exit</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="databaseTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ACTIVITY PAGE -->
+
+        <section class="page" id="activity">
+
+            <div class="content-card">
+                <h2>Activity Log</h2>
+                <p>History of parking system activities.</p>
+
+                <ul id="activityLogs" class="log-list"></ul>
+            </div>
+
+        </section>
+
+
+        <!-- SETTINGS PAGE -->
+
+        <section class="page" id="settings">
+
+            <div class="content-card">
+                <h2>Parking Settings</h2>
+                <p>Change the total parking capacity.</p>
+
+                <div class="settings-current">
+                    <span>Current Total Parking Slots</span>
+                    <strong id="settingsCurrentSlots">0</strong>
+                </div>
+
+                <form id="resizeForm" class="settings-form">
+
+                    <label for="newSlotCount">
+                        New Total Parking Slots
+                    </label>
+
+                    <input
+                        type="number"
+                        id="newSlotCount"
+                        min="1"
+                        placeholder="Enter new number of slots"
+                        required
+                    >
+
+                    <button type="submit" class="primary-button">
+                        Save Parking Settings
+                    </button>
+
+                </form>
+
+                <p id="resizeMessage" class="message"></p>
+
+                <div class="info-box">
+                    <strong>Important:</strong>
+                    You cannot reduce parking capacity below the number of currently occupied slots.
+                    When capacity increases, waiting vehicles are automatically assigned to available slots in FIFO order.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer>
+            ParkSmart | Smart Parking Slot Allocation System
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
